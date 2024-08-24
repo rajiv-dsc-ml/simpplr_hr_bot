@@ -1,0 +1,21 @@
+version: "3.0"
+
+services:
+    hr-simpplr:
+        build: .
+        ports:
+            - "8087:8087"
+        restart: "always"
+        networks:
+            - hr_assistant
+        environment:
+            GUNICORN_THREADS: "1"
+            GUNICORN_WORKERS: "1"     
+
+
+
+networks:
+    hr_assistant:
+        external: true
+        name: hr_assistant
+
