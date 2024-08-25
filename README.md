@@ -28,9 +28,21 @@ Note that the pdfs are separated, but , after parsing the text , the whole text 
 ## Chunking is a very important step .
 My choice of chunking is MarkdownHeaderTextSplitter
 Why ? The nature of the data is such that the information is followed by a given heading and subheading .
-This pair of a heading and a subheading or in some case a triplet of heading , subheading , sub-sub-heading can be used to chunk different parts of the pdf text belonging to particular topics 
+This pair of a heading and a subheading or in some case a triplet of heading , subheading , sub-sub-heading can be used to chunk different parts of the pdf text belonging to particular topics. 
 
-The challenge to observe is that if any chunk passes the limit of the context size 
+## Data Analysis : 
+All the pdf files were analysed to get the regex pattern to identify the heading , subheading2, subheading3
+# heading is the title of the pdf 
+# subheading2 is like 'Introduction' , 'Conclusion'
+# subheading3 comes optional in some cases when the text under a subheading has further points of texts .
+# Analysis showed me two different pair of patterns for subheading2 and subheading3 which were used as part of Custom Pdf Reader Class to mark the heading with # , subheading2 with '##'
+and subheading3 with '###' 
+
+# Note that heading is very easy to identify , as it is the title which is present in the first page of the pdf itself 
+# subheading2 and subheading3 follow one of the 2 identified pairs of regex patterns
+# Each pdf can belong to one of these two identified pairs 
+# Hence a map is prepared that stores the pdf filepath as key and the pair of the regex patterns as the value that pdf file follows for the marking of subheading2 and subheading3
+
 
 ### Need for writing custom pdf parser 
 I first experimented with usual pypdf on which a langchain wrapper is available .
